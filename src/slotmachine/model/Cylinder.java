@@ -1,10 +1,7 @@
 package slotmachine.model;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.Vector;
 
 /**
  * Reprezentacja bębna w automacie jędnorękiego bandyty.

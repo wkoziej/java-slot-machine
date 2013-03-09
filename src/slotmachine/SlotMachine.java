@@ -4,6 +4,8 @@
  */
 package slotmachine;
 
+import slotmachine.model.GameRules;
+
 /**
  *
  * @author wojtas
@@ -15,6 +17,6 @@ public class SlotMachine {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println((int) 0.99);
+        System.out.println(new GameRules());
     }
 }

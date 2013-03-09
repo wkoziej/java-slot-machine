@@ -54,4 +54,11 @@ public class Symbol {
         hash = 47 * hash + (this.wild != null ? this.wild.hashCode() : 0);
         return hash;
     }
+
+    @Override
+    public String toString() {
+        return representation.toString();
+    }
+    
+    
 }
