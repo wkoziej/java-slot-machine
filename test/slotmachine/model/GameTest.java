@@ -25,6 +25,7 @@ import static org.junit.Assert.*;
 public class GameTest {
 
     final GameRules gameRules = new GameRules();
+    final Machine machine = new Machine(gameRules);
 
     public GameTest() {
     }
@@ -35,7 +36,7 @@ public class GameTest {
     @Test
     public void testInsertCoin() {
         System.out.println("insertCoin");
-        Game instance = new Game(gameRules);
+        Game instance = new Game(machine);
         instance.insertCoin();
         int gamePoints = instance.accountPoints();
         assertEquals(gamePoints, gameRules.coinsToPointFactor());
@@ -47,7 +48,7 @@ public class GameTest {
     @Test
     public void testBetCostInPoints() {
         System.out.println("betCostInPoints");
-        Game game = new Game(gameRules);
+        Game game = new Game(machine);
         int expResult = gameRules.coinsToPointFactor(); // jedna linia i jedna moneta domyślnie w nowej grze
         int result = game.betCostInPoints();
         assertEquals(expResult, result);
@@ -59,7 +60,7 @@ public class GameTest {
     @Test
     public void testIsPlayable() {
         System.out.println("isPlayable");
-        Game instance = new Game(gameRules);
+        Game instance = new Game(machine);
         boolean expResult = false;
         boolean result = instance.isPlayable();
         assertEquals(expResult, result);
@@ -71,7 +72,7 @@ public class GameTest {
     @Test
     public void testPayForRound() {
         System.out.println("payForRound");
-        Game game = new Game(gameRules);
+        Game game = new Game(machine);
         game.payForRound();
         final int accountPoints = game.accountPoints();
         assertEquals(0, accountPoints);

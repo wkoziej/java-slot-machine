@@ -42,10 +42,10 @@ public class GameRules {
      */
     public GameRules() {
         // Dostępne symbole
-        symbols = new Symbol [] {A, B, C, D, E, F, wild};
+        symbols = new Symbol[]{A, B, C, D, E, F, wild};
         // Płatności za symbole
         payTable = new HashMap<Symbol, int[]>();
-       
+
         int bottom[] = {1, 2, 4};
         int worst[] = {5, 20, 40};
         int worse[] = {10, 30, 100};
@@ -53,7 +53,7 @@ public class GameRules {
         int better[] = {100, 200, 400};
         int best[] = {333, 666, 999};
         int zero[] = {0, 0, 0};
-        
+
         payTable.put(A, best);
         payTable.put(B, better);
         payTable.put(C, medium);
@@ -89,13 +89,13 @@ public class GameRules {
                 {true, true, true, false, false}
             }
         };
-       
-        Symbol reelSymbols [] = {A, B, C, D, E, F, wild,
-                                    B, C, D, E, F, wild,
-                                       C, D, E, F, wild,
-                                          D, E, F, wild,
-                                             E, F, wild,
-                                                F};
+
+        Symbol reelSymbols[] = {A, B, C, D, E, F, wild,
+            B, C, D, E, F, wild,
+            C, D, E, F, wild,
+            D, E, F, wild,
+            E, F, wild,
+            F};
         reel = new Reel(reelSymbols);
     }
 
@@ -107,12 +107,12 @@ public class GameRules {
     }
 
     /**
-     * Ile będzie widoczych wierszy na wyświetlaczu. 
+     * Ile będzie widoczych wierszy na wyświetlaczu.
      */
     public int visibleRows() {
         return 3;
     }
-    
+
     /**
      * Przelicznik monet na punkty.
      */
@@ -125,6 +125,13 @@ public class GameRules {
      */
     public int maxCoinsInRound() {
         return 5;
+    }
+
+    /**
+     * Liczba płatnych linii w grze.
+     */
+    int payLinesCount() {
+        return payLines.length;
     }
 
     /**
@@ -142,13 +149,13 @@ public class GameRules {
      * Punktacja w grze.
      */
     public int payTable(Symbol symbol, int numberOfOccurrences) {
-        if (numberOfOccurrences < 3
+        if (numberOfOccurrences < minimumSymbolsCountInLine()
                 || numberOfOccurrences > slotsNumber()
                 || symbol.isWild()) {
             return 0;
         }
         // 3 <= numberOfOccurence <= 5
-        return payTable.get(symbol)[numberOfOccurrences - 3];
+        return payTable.get(symbol)[numberOfOccurrences - minimumSymbolsCountInLine()];
     }
 
     @Override
@@ -197,5 +204,13 @@ public class GameRules {
         }
         stringBuilder.append("}\n");
         return stringBuilder.toString();
+    }
+
+    boolean[][] payLinesDefinition(int lineNo) {
+        return payLines[lineNo];
+    }
+
+    int minimumSymbolsCountInLine() {
+        return 3;
     }
 }

@@ -15,6 +15,8 @@
  */
 package slotmachine;
 
+import slotmachine.controller.GameController;
+import slotmachine.model.Game;
 import slotmachine.model.GameRules;
 import slotmachine.model.Machine;
 
@@ -30,11 +32,16 @@ public class SlotMachine {
     public static void main(String[] args) {
         final GameRules gameRules = new GameRules();
         System.out.println(gameRules);
-        // TODO code application logic here
+
         Machine machine = new Machine(gameRules);
         System.out.println(machine);
-        machine.pullArm();
-        System.out.println(machine);
-        
+
+        GameController gameController = new GameController(machine);
+
+        for (int i = 0; i < 10; i++) {
+            gameController.insertCoin();
+            gameController.play();
+            System.out.println(gameController);
+        }
     }
 }

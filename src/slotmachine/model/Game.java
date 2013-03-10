@@ -15,6 +15,8 @@
  */
 package slotmachine.model;
 
+import java.util.Map;
+
 /**
  *
  * @author wokoziej
@@ -36,30 +38,37 @@ public class Game {
     /**
      * Reguły wg jakich gramy.
      */
-    private final GameRules gameRules;
+    private final Machine machine;
 
     /**
      * Domyślne ustawienia dla nowej gry
      */
-    public Game(GameRules gameRules) {
+    public Game(Machine machine) {
         points = 0;
         linesCount = 1;
         coinsCount = 1;
-        this.gameRules = gameRules;
+        this.machine = machine;
     }
 
     /**
      * Zasil konto gry pojedynczą monetą.
      */
     public void insertCoin() {
-        points += gameRules.coinsToPointFactor();
+        insertCoins(1);
+    }
+
+    /**
+     * Zasil konto gry zadaną liczbą monet monetą.
+     */
+    public void insertCoins(int coins) {
+        points += coins * machine.gameRules().coinsToPointFactor();
     }
 
     /**
      * Koszt zakładu wyrażona w punktach.
      */
     public int betCostInPoints() {
-        return linesCount * coinsCount * gameRules.coinsToPointFactor();
+        return linesCount * coinsCount * machine.gameRules().coinsToPointFactor();
     }
 
     /**
@@ -85,5 +94,36 @@ public class Game {
      */
     public int accountPoints() {
         return points;
+    }
+
+    /**
+     * Uwzględniając - wysokość zakładu (płatność za linię) w punktach - tabelę
+     * płatności za poszczególne symbole - obstawioną liczbę linii i ich
+     * definicję wylicz wartość wygranej i zwróć ją przeliczając na monety
+     */
+    public int prizeInCoins() {
+        //Symbol[][] symbolsOnScreen = machine.symbolsOnScreen();
+        GameRules gameRules = machine.gameRules();
+        int points = 0;
+        for (int i = 0; i < linesCount; i++) {
+            Map<Symbol, Integer> symbolsOnLine = machine.countSymbolsOnLine(i);
+            for (Map.Entry<Symbol, Integer> currentSymbol : symbolsOnLine.entrySet()) {
+                Symbol symbol = currentSymbol.getKey();
+                Integer occurrences = currentSymbol.getValue();               
+                points += gameRules.payTable(symbol, occurrences);
+                
+            }
+        }
+        return points / gameRules.coinsToPointFactor();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Game {").append("points = ").append(points).
+                append(", linesCount = ").append(linesCount).
+                append(", coinsCount = ").append(coinsCount).
+                append(", bet = ").append(betCostInPoints()).append(" }");
+        return builder.toString();
     }
 }
