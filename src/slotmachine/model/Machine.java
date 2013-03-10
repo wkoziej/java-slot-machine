@@ -32,8 +32,7 @@ public class Machine {
         for (int i = 0; i < slotsNumber; i++) {
             Wheel wheel = new Wheel(reel);
             cylinder.addWheel(reel);
-        }    
-        cylinder.turn();
+        } 
     }
 
     public void pullArm () {
@@ -41,12 +40,30 @@ public class Machine {
     }
 
     Symbol [][] symbolsOnScreen () {
-        return null;
+        final int visibleRows = gameRules.visibleRows();
+        final int slotsNumber = gameRules.slotsNumber();
+        Symbol [][] screenSymbols = new Symbol [visibleRows][slotsNumber];
+        for (int i = 0; i < visibleRows; i++) {
+            for (int j = 0; j < slotsNumber; j++) {
+                screenSymbols [i][j] = cylinder.getSymbol(j, i);
+            }
+        }
+        return screenSymbols;
     }
     
     @Override
     public String toString() {
-        return super.toString();
+        Symbol[][] symbols = symbolsOnScreen();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < symbols.length; i++) {
+            Symbol[] symbols1 = symbols[i];
+            for (int j = 0; j < symbols1.length; j++) {
+                Symbol symbol = symbols1[j];
+                builder.append(symbol);
+            }
+            builder.append("\n");
+        }
+        return builder.toString();
     }
     
 }
