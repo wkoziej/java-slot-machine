@@ -44,6 +44,13 @@ public class SymbolTest {
                 A.equals(anotherA));
         assertEquals(false,
                 A.equals(B));
+        
+        Symbol A1 = new Symbol('A', null);
+        Symbol A2 = new Symbol('A', false);
+        assertEquals(false,
+                A1.equals(anotherA));
+        assertEquals(false,
+                A1.equals(null));
     }
 
     @Test

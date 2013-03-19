@@ -34,7 +34,7 @@ public class Symbol {
 
     public Symbol(Character represetation, Boolean wild) {
         this.representation = represetation;
-        this.wild = wild == null ? false : wild;
+        this.wild = wild;
     }
 
     /**
