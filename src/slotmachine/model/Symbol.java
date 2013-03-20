@@ -28,8 +28,8 @@ public class Symbol {
     private final Boolean wild;
 
     private Symbol() {
-        representation = Character.MIN_VALUE;
-        wild = Boolean.FALSE;
+        representation = null;
+        wild = null;
     }
 
     public Symbol(Character represetation, Boolean wild) {
@@ -46,16 +46,21 @@ public class Symbol {
      * getRepresentaion().equals(representaion)
      */
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof Symbol)) {
-            return false;
+    public boolean equals(Object object) {      
+        boolean result = false;
+        if (object != null && 
+                object instanceof Symbol) {
+            Symbol symbol = (Symbol) object;
+            if (representation != null
+                    && wild != null
+                    && symbol.representation != null
+                    && symbol.wild != null) {
+                result = this.wild.booleanValue()
+                        || symbol.wild.booleanValue()
+                        || representation.equals(symbol.representation);
+            }
         }
-        Symbol symbol = (Symbol) object;
-        if (isWild() || symbol.isWild()) {
-            return true;
-        } else {
-            return representation.equals(symbol.representation);
-        }
+        return result;
     }
 
     public Boolean isWild() {
@@ -72,7 +77,7 @@ public class Symbol {
 
     @Override
     public String toString() {
-        return representation.toString();
+        return representation == null ? "NULL" : representation.toString();
     }
     
     
