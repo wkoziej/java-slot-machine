@@ -15,10 +15,7 @@
  */
 package slotmachine;
 
-import slotmachine.controller.GameController;
-import slotmachine.model.Game;
-import slotmachine.model.GameRules;
-import slotmachine.model.Machine;
+import slotmachine.model.Symbol;
 
 /**
  *
@@ -30,18 +27,23 @@ public class SlotMachine {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        final GameRules gameRules = new GameRules();
-        System.out.println(gameRules);
+        Symbol a1 = new Symbol('a', null);
+        Symbol a2 = new Symbol('a', false);
+        Symbol a3 = a1;
+        System.out.println(a1);
+        System.out.println(a2);
+        System.out.println(a3);
 
-        Machine machine = new Machine(gameRules);
-        System.out.println(machine);
+        if (a1.equals(a2)) {
+            System.err.println("a1 equals a2");
+        }
 
-        GameController gameController = new GameController(machine);
+        if (a1 == a2) {
+            System.err.println("a1 == a2");
+        }
 
-        for (int i = 0; i < 10; i++) {
-            gameController.insertCoin();
-            gameController.play();
-            System.out.println(gameController);
+        if (a1 == a3) {
+            System.err.println("a1 == a3");
         }
     }
 }
