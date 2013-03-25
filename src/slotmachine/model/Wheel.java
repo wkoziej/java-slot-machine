@@ -51,16 +51,15 @@ public class Wheel {
         return position;
     }
 
-    Symbol getSymbol(int rowNo) {
-        if (rowNo < 0
-                || rowNo >= reel.getSize()) {
-            throw new RuntimeException("Nieprowidłowy indeks wiersza (" + rowNo + ") ");
+    public Symbol getSymbol(int rowNo) {
+        if (rowNo < 0 || rowNo >= reel.getSize()) {
+            throw new RuntimeException("Nieprawidłowy indeks wiersza (" + rowNo + ") ");
         }
         int symbolPos = (rowNo + position) % reel.getSize();
         return reel.getSymbolAt(symbolPos);
     }
 
-    void turnTo(int newPosition) {
+    public void turnTo(int newPosition) {
         position = newPosition % reel.getSize();
     }
 }

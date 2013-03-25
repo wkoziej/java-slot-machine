@@ -15,7 +15,6 @@
  */
 package slotmachine.model;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -130,6 +129,9 @@ public class Machine {
             }
         }
         return symbolsOnLine;
+    }
 
+    public Cylinder getCylinder() {
+        return cylinder;
     }
 }

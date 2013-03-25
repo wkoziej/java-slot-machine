@@ -17,6 +17,7 @@ package slotmachine.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Reprezentacja bębna w automacie jędnorękiego bandyty.
@@ -50,10 +51,14 @@ public class Cylinder {
     public Symbol getSymbol(int wheelNo, int rowNo) {
         if (wheelNo < 0
                 || wheelNo >= wheels.size()) {
-            throw new RuntimeException("Nieprowidłowy indeks koła (" + wheelNo
+            throw new RuntimeException("Nieprawidłowy indeks koła (" + wheelNo
                     + ") ");
         }
         Wheel wheel = wheels.get(wheelNo);
         return wheel.getSymbol(rowNo);
+    }
+    
+    public List<Wheel> getWheels() {
+        return wheels;
     }
 }

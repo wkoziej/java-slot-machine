@@ -32,9 +32,9 @@ public class Game {
      */
     private int linesCount;
     /**
-     * Ile postawiono monet na każdą linię.
+     * Ile postawiono na każdą linię.
      */
-    private int coinsCount;
+    private int lineBet;
     /**
      * Reguły wg jakich gramy.
      */
@@ -46,7 +46,7 @@ public class Game {
     public Game(Machine machine) {
         points = 0;
         linesCount = 1;
-        coinsCount = 1;
+        lineBet = 1;
         this.machine = machine;
     }
 
@@ -68,7 +68,7 @@ public class Game {
      * Koszt zakładu wyrażona w punktach.
      */
     public int betCostInPoints() {
-        return linesCount * coinsCount * machine.gameRules().coinsToPointFactor();
+        return linesCount * lineBet;
     }
 
     /**
@@ -99,22 +99,30 @@ public class Game {
     /**
      * Uwzględniając - wysokość zakładu (płatność za linię) w punktach - tabelę
      * płatności za poszczególne symbole - obstawioną liczbę linii i ich
-     * definicję wylicz wartość wygranej i zwróć ją przeliczając na monety
+     * definicję wylicz wartość wygranej i zwróć jej wielkość w punktach
      */
-    public int prizeInCoins() {
-        //Symbol[][] symbolsOnScreen = machine.symbolsOnScreen();
+    public int prizeInPoints() {
         GameRules gameRules = machine.gameRules();
-        int points = 0;
+        int prize = 0;
         for (int i = 0; i < linesCount; i++) {
             Map<Symbol, Integer> symbolsOnLine = machine.countSymbolsOnLine(i);
             for (Map.Entry<Symbol, Integer> currentSymbol : symbolsOnLine.entrySet()) {
                 Symbol symbol = currentSymbol.getKey();
-                Integer occurrences = currentSymbol.getValue();               
-                points += gameRules.payTable(symbol, occurrences);
-                
+                Integer occurrences = currentSymbol.getValue();
+                prize += gameRules.payTable(symbol, occurrences);
             }
         }
-        return points / gameRules.coinsToPointFactor();
+        return prize * lineBet;
+    }
+
+    /**
+     * Uwzględniając - wysokość zakładu (płatność za linię) w punktach - tabelę
+     * płatności za poszczególne symbole - obstawioną liczbę linii i ich
+     * definicję wylicz wartość wygranej i zwróć ją przeliczając na monety
+     */
+    public int prizeInCoins() {
+        GameRules gameRules = machine.gameRules();
+        return prizeInPoints() / gameRules.coinsToPointFactor();
     }
 
     @Override
@@ -122,8 +130,20 @@ public class Game {
         StringBuilder builder = new StringBuilder();
         builder.append("Game {").append("points = ").append(points).
                 append(", linesCount = ").append(linesCount).
-                append(", coinsCount = ").append(coinsCount).
+                append(", lineBet = ").append(lineBet).
                 append(", bet = ").append(betCostInPoints()).append(" }");
         return builder.toString();
+    }
+
+    public void setPayLinesCount(int intValue) {
+        linesCount = intValue;
+    }
+
+    public void setLineBet(int intValue) {
+        lineBet = intValue;
+    }
+
+    public void addPoints(int intValue) {
+        points += intValue;
     }
 }

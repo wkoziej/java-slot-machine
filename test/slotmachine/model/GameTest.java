@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  */
 public class GameTest {
 
-    final GameRules gameRules = new GameRules();
+    final SimplestGameRules gameRules = new SimplestGameRules();
     final Machine machine = new Machine(gameRules);
 
     public GameTest() {

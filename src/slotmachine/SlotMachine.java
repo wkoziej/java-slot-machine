@@ -16,9 +16,9 @@
 package slotmachine;
 
 import slotmachine.controller.GameController;
-import slotmachine.model.Game;
-import slotmachine.model.GameRules;
+import slotmachine.model.SimplestGameRules;
 import slotmachine.model.Machine;
+import slotmachine.view.MainFrame;
 
 /**
  *
@@ -30,7 +30,19 @@ public class SlotMachine {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        final GameRules gameRules = new GameRules();
+        final SimplestGameRules gameRules = new SimplestGameRules();
+        final Machine machine = new Machine(gameRules);
+        //machine.pullArm();
+        final GameController gameController = new GameController(machine);
+      
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainFrame(gameController).setVisible(true);
+            }
+        });
+        
+        /*
+        final SimplestGameRules gameRules = new SimplestGameRules();
         System.out.println(gameRules);
 
         Machine machine = new Machine(gameRules);
@@ -43,5 +55,6 @@ public class SlotMachine {
             gameController.play();
             System.out.println(gameController);
         }
+        */
     }
 }

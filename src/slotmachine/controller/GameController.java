@@ -15,6 +15,7 @@
  */
 package slotmachine.controller;
 
+import slotmachine.model.Cylinder;
 import slotmachine.model.Game;
 import slotmachine.model.Machine;
 
@@ -59,11 +60,51 @@ public class GameController {
                 game.insertCoins(coins);
             }
         }
-
     }
 
     @Override
     public String toString() {
         return machine.toString() + "\n" + game.toString();
+    }
+
+    public int getPointsCount() {
+        return game.accountPoints();
+    }
+
+    public Cylinder getCylinder() {
+        return machine.getCylinder();
+    }
+
+    public boolean canPlayGame() {
+        return game.isPlayable();
+    }
+
+    public void takePoints() {
+        game.payForRound();
+    }
+
+    public void setPayLineCount(Integer newValue) {
+        game.setPayLinesCount(newValue.intValue());
+    }
+
+    public int betValue() {
+        return game.betCostInPoints();
+    }
+
+    public void setLineBet(Integer newValue) {
+
+        game.setLineBet(newValue.intValue());
+    }
+
+    public void turnCylinder() {
+        machine.pullArm();
+    }
+
+    public int pointsGained() {
+        return game.prizeInPoints();
+    }
+
+    public void increasePoints(int intValue) {
+        game.addPoints(intValue);
     }
 }
